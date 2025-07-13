@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Compress your images online instantly with our free and responsive image compression tool. Select compression level and optimize image quality without losing clarity." />
+  <meta name="keywords" content="image compression, online image compressor, compress jpeg, compress png, image optimizer tool" />
+  <meta name="author" content="YourSiteName" />
+  <title>Online Image Compression Tool – Free & Fast</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 1rem;
+      background: #f4f4f4;
+      color: #333;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    h1 {
+      font-size: 2rem;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: auto;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    input[type="file"] {
+      margin-bottom: 1rem;
+    }
+
+    label, input, button, select {
+      display: block;
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+
+    button {
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      padding: 0.75rem;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    img {
+      max-width: 100%;
+      margin-top: 1rem;
+    }
+
+    .ad-space {
+      margin: 2rem 0;
+      text-align: center;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+      color: #777;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Free Online Image Compressor</h1>
+    <p>Reduce image size without losing quality</p>
+  </header>
+
+  <!-- AdSense Ad Block 1 -->
+  <div class="ad-space">
+    <!-- Replace 'ca-pub-XXXXXXX' and '1234567890' with your AdSense Publisher and Ad Unit ID -->
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-XXXXXXX"
+         data-ad-slot="1234567890"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+
+  <div class="container">
+    <input type="file" id="imageInput" accept="image/*">
+    
+    <label for="qualityRange">Select Compression Quality (10–100):</label>
+    <input type="range" id="qualityRange" min="10" max="100" value="80">
+    <span id="qualityValue">80%</span>
+
+    <button onclick="compressImage()">Compress Image</button>
+    
+    <canvas id="canvas" style="display:none;"></canvas>
+    
+    <div id="result"></div>
+  </div>
+
+  <!-- AdSense Ad Block 2 -->
+  <div class="ad-space">
+    <!-- Replace 'ca-pub-XXXXXXX' and '0987654321' with your AdSense Publisher and Ad Unit ID -->
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-XXXXXXX"
+         data-ad-slot="0987654321"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+
+  <footer>
+    &copy; 2025 YourSiteName. All rights reserved.
+  </footer>
+
+  <script>
+    const imageInput = document.getElementById("imageInput");
+    const qualityRange = document.getElementById("qualityRange");
+    const qualityValue = document.getElementById("qualityValue");
+    const resultDiv = document.getElementById("result");
+
+    qualityRange.addEventListener("input", () => {
+      qualityValue.textContent = `${qualityRange.value}%`;
+    });
+
+    function compressImage() {
+      const file = imageInput.files[0];
+      if (!file) {
+        alert("Please upload an image first.");
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function (event) {
+        const img = new Image();
+        img.src = event.target.result;
+
+        img.onload = function () {
+          const canvas = document.getElementById("canvas");
+          const ctx = canvas.getContext("2d");
+
+          canvas.width = img.width;
+          canvas.height = img.height;
+          ctx.drawImage(img, 0, 0);
+
+          const quality = parseInt(qualityRange.value) / 100;
+          const compressedData = canvas.toDataURL("image/jpeg", quality);
+
+          const compressedImg = new Image();
+          compressedImg.src = compressedData;
+
+          const downloadBtn = document.createElement("a");
+          downloadBtn.href = compressedData;
+          downloadBtn.download = "compressed.jpg";
+          downloadBtn.textContent = "Download Compressed Image";
+          downloadBtn.style.display = "inline-block";
+          downloadBtn.style.marginTop = "1rem";
+          downloadBtn.style.backgroundColor = "#28a745";
+          downloadBtn.style.color = "#fff";
+          downloadBtn.style.padding = "0.5rem 1rem";
+          downloadBtn.style.borderRadius = "4px";
+          downloadBtn.style.textDecoration = "none";
+
+          resultDiv.innerHTML = "";
+          resultDiv.appendChild(compressedImg);
+          resultDiv.appendChild(downloadBtn);
+        };
+      };
+      reader.readAsDataURL(file);
+    }
+  </script>
+</body>
+</html>
